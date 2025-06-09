@@ -13,11 +13,13 @@ CARGO_TARGET_DIR ?= target
 # List of features to use when building. Can be overridden via the environment.
 # No jemalloc on Windows and OpenBSD
 # No ledger on OpenBSD
+# LIBCLANG_PATH in OpenBSD, requires having llvm 19 package installed.
 ifeq ($(OS),Windows_NT)
     FEATURES ?= aws-kms gcp-kms cli asm-keccak ledger
 else
     ifeq ($(shell uname -s),OpenBSD)
         FEATURES ?= aws-kms gcp-kms cli asm-keccak
+		    export LIBCLANG_PATH ?= /usr/local/llvm19/lib/
     else
         FEATURES ?= jemalloc aws-kms gcp-kms cli asm-keccak ledger
     endif
