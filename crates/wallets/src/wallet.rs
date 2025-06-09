@@ -70,7 +70,7 @@ pub struct WalletOpts {
     pub keystore_password_file: Option<String>,
 
     /// Use a Ledger hardware wallet.
-    #[arg(long, short, help_heading = "Wallet options - hardware wallet")]
+    #[arg(long, short, help_heading = "Wallet options - hardware wallet", hide = !cfg!(feature = "ledger"))]
     pub ledger: bool,
 
     /// Use a Trezor hardware wallet.

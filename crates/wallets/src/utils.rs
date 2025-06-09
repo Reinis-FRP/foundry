@@ -1,6 +1,5 @@
 use crate::{error::PrivateKeyError, PendingSigner, WalletSigner};
 use alloy_primitives::{hex::FromHex, B256};
-use alloy_signer_ledger::HDPath as LedgerHDPath;
 use alloy_signer_local::PrivateKeySigner;
 use alloy_signer_trezor::HDPath as TrezorHDPath;
 use eyre::{Context, Result};
@@ -55,13 +54,7 @@ pub async fn create_ledger_signer(
     hd_path: Option<&str>,
     mnemonic_index: u32,
 ) -> Result<WalletSigner> {
-    let derivation = if let Some(hd_path) = hd_path {
-        LedgerHDPath::Other(hd_path.to_owned())
-    } else {
-        LedgerHDPath::LedgerLive(mnemonic_index as usize)
-    };
-
-    WalletSigner::from_ledger_path(derivation).await.wrap_err_with(|| {
+    WalletSigner::from_ledger_path(hd_path, mnemonic_index).await.wrap_err_with(|| {
         "\
 Could not connect to Ledger device.
 Make sure it's connected and unlocked, with no other desktop wallet apps open."

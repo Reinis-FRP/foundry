@@ -211,7 +211,7 @@ pub struct MultiWalletOpts {
     pub keystore_password_files: Option<Vec<String>>,
 
     /// Use a Ledger hardware wallet.
-    #[arg(long, short, help_heading = "Wallet options - hardware wallet")]
+    #[arg(long, short, help_heading = "Wallet options - hardware wallet", hide = !cfg!(feature = "ledger"))]
     pub ledger: bool,
 
     /// Use a Trezor hardware wallet.
@@ -360,6 +360,7 @@ impl MultiWalletOpts {
     }
 
     pub async fn ledgers(&self) -> Result<Option<Vec<WalletSigner>>> {
+        #[cfg(feature = "ledger")]
         if self.ledger {
             let mut args = self.clone();
 
