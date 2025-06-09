@@ -93,7 +93,7 @@ opener = "0.7"
 soldeer-commands.workspace = true
 quick-junit = "0.5.0"
 
-[target.'cfg(unix)'.dependencies]
+[target.'cfg(all(unix, not(target_os = "openbsd")))'.dependencies]
 tikv-jemallocator = { workspace = true, optional = true }
 
 [dev-dependencies]

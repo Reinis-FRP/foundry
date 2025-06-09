@@ -11,11 +11,16 @@ BIN_DIR = dist/bin
 CARGO_TARGET_DIR ?= target
 
 # List of features to use when building. Can be overridden via the environment.
-# No jemalloc on Windows
+# No jemalloc on Windows and OpenBSD
+# No ledger on OpenBSD
 ifeq ($(OS),Windows_NT)
-    FEATURES ?= aws-kms gcp-kms cli asm-keccak
+    FEATURES ?= aws-kms gcp-kms cli asm-keccak ledger
 else
-    FEATURES ?= jemalloc aws-kms gcp-kms cli asm-keccak
+    ifeq ($(shell uname -s),OpenBSD)
+        FEATURES ?= aws-kms gcp-kms cli asm-keccak
+    else
+        FEATURES ?= jemalloc aws-kms gcp-kms cli asm-keccak ledger
+    endif
 endif
 
 ##@ Help
