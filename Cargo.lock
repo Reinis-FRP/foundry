@@ -10407,7 +10407,3 @@ dependencies = [
  "log",
  "simd-adler32",
 ]
-
-[[patch.unused]]
-name = "coins-ledger"
-version = "1.2.3"

@@ -2,7 +2,3 @@
 	path = third_party/hidapi-rusb
 	url = https://github.com/Reinis-FRP/hidapi-rs.git
 	branch = openbsd
-[submodule "third_party/coins"]
-	path = third_party/coins
-	url = https://github.com/Reinis-FRP/coins.git
-	branch = openbsd
