@@ -55,7 +55,7 @@ impl WalletSigner {
                 LedgerHDPath::LedgerLive(mnemonic_index as usize)
             };
 
-            let ledger = LedgerSigner::new(path, None).await?;
+            let ledger = LedgerSigner::new(derivation, None).await?;
             Ok(Self::Ledger(ledger))
         }
         #[cfg(not(feature = "ledger"))]
