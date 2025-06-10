@@ -18,14 +18,12 @@ foundry-config.workspace = true
 alloy-primitives.workspace = true
 alloy-signer = { workspace = true, features = ["eip712"] }
 alloy-signer-local = { workspace = true, features = ["mnemonic", "keystore"] }
+alloy-signer-ledger = { workspace = true, features = ["eip712"] }
 alloy-signer-trezor.workspace = true
 alloy-network.workspace = true
 alloy-consensus.workspace = true
 alloy-sol-types.workspace = true
 alloy-dyn-abi.workspace = true
-
-# ledger
-alloy-signer-ledger = { workspace = true, features = ["eip712"], optional = true }
 
 # aws-kms
 alloy-signer-aws = { workspace = true, features = ["eip712"], optional = true }
@@ -53,6 +51,5 @@ eth-keystore = "0.5.0"
 tokio = { workspace = true, features = ["macros"] }
 
 [features]
-ledger = ["dep:alloy-signer-ledger"]
 aws-kms = ["dep:alloy-signer-aws", "dep:aws-config", "dep:aws-sdk-kms"]
 gcp-kms = ["dep:alloy-signer-gcp", "dep:gcloud-sdk"]

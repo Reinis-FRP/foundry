@@ -95,7 +95,6 @@ foundry-test-utils.workspace = true
 default = ["jemalloc"]
 asm-keccak = ["alloy-primitives/asm-keccak"]
 jemalloc = ["dep:tikv-jemallocator"]
-ledger = ["foundry-wallets/ledger"]
 aws-kms = ["foundry-wallets/aws-kms", "dep:aws-sdk-kms"]
 gcp-kms = ["foundry-wallets/gcp-kms", "dep:gcloud-sdk"]
 isolate-by-default = ["foundry-config/isolate-by-default"]

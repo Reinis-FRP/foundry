@@ -4,14 +4,12 @@ use alloy_dyn_abi::TypedData;
 use alloy_network::TxSigner;
 use alloy_primitives::{hex, Address, ChainId, PrimitiveSignature, B256};
 use alloy_signer::Signer;
+use alloy_signer_ledger::{HDPath as LedgerHDPath, LedgerSigner};
 use alloy_signer_local::{coins_bip39::English, MnemonicBuilder, PrivateKeySigner};
 use alloy_signer_trezor::{HDPath as TrezorHDPath, TrezorSigner};
 use alloy_sol_types::{Eip712Domain, SolStruct};
 use async_trait::async_trait;
 use std::path::PathBuf;
-
-#[cfg(feature = "ledger")]
-use alloy_signer_ledger::{HDPath as LedgerHDPath, LedgerSigner};
 
 #[cfg(feature = "aws-kms")]
 use {alloy_signer_aws::AwsSigner, aws_config::BehaviorVersion, aws_sdk_kms::Client as AwsClient};
@@ -33,7 +31,6 @@ pub enum WalletSigner {
     /// Wrapper around local wallet. e.g. private key, mnemonic
     Local(PrivateKeySigner),
     /// Wrapper around Ledger signer.
-    #[cfg(feature = "ledger")]
     Ledger(LedgerSigner),
     /// Wrapper around Trezor signer.
     Trezor(TrezorSigner),
@@ -46,24 +43,9 @@ pub enum WalletSigner {
 }
 
 impl WalletSigner {
-    pub async fn from_ledger_path(hd_path: Option<&str>, mnemonic_index: u32) -> Result<Self> {
-        #[cfg(feature = "ledger")]
-        {
-            let derivation = if let Some(hd_path) = hd_path {
-                LedgerHDPath::Other(hd_path.to_owned())
-            } else {
-                LedgerHDPath::LedgerLive(mnemonic_index as usize)
-            };
-
-            let ledger = LedgerSigner::new(derivation, None).await?;
-            Ok(Self::Ledger(ledger))
-        }
-        #[cfg(not(feature = "ledger"))]
-        {
-            let _ = hd_path;
-            let _ = mnemonic_index;
-            Err(WalletSignerError::ledger_unsupported())
-        }
+    pub async fn from_ledger_path(path: LedgerHDPath) -> Result<Self> {
+        let ledger = LedgerSigner::new(path, None).await?;
+        Ok(Self::Ledger(ledger))
     }
 
     pub async fn from_trezor_path(path: TrezorHDPath) -> Result<Self> {
@@ -140,7 +122,6 @@ impl WalletSigner {
             Self::Local(local) => {
                 senders.push(local.address());
             }
-            #[cfg(feature = "ledger")]
             Self::Ledger(ledger) => {
                 for i in 0..max {
                     if let Ok(address) =
@@ -204,7 +185,6 @@ macro_rules! delegate {
     ($s:ident, $inner:ident => $e:expr) => {
         match $s {
             Self::Local($inner) => $e,
-            #[cfg(feature = "ledger")]
             Self::Ledger($inner) => $e,
             Self::Trezor($inner) => $e,
             #[cfg(feature = "aws-kms")]

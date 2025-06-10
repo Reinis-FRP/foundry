@@ -16,16 +16,16 @@ CARGO_TARGET_DIR ?= target
 # LIBCLANG_PATH in OpenBSD, requires having llvm 19 package installed.
 # Override solc binaries for OpenBSD.
 ifeq ($(OS),Windows_NT)
-    FEATURES ?= aws-kms gcp-kms cli asm-keccak ledger
+    FEATURES ?= aws-kms gcp-kms cli asm-keccak
 else
     ifeq ($(shell uname -s),OpenBSD)
-        FEATURES ?= aws-kms gcp-kms cli ledger
+        FEATURES ?= aws-kms gcp-kms cli
 		    export LIBCLANG_PATH ?= /usr/local/llvm19/lib/
 		        ifeq ($(shell uname -m),amd64)
 					      export SVM_RELEASES_LIST_JSON ?= $(abspath ./solc/openbsd/amd64/list.json)
 			      endif
     else
-        FEATURES ?= jemalloc aws-kms gcp-kms cli asm-keccak ledger
+        FEATURES ?= jemalloc aws-kms gcp-kms cli asm-keccak
     endif
 endif
 

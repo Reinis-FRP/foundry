@@ -15,7 +15,7 @@ pub struct ListArgs {
     dir: Option<String>,
 
     /// List accounts from a Ledger hardware wallet.
-    #[arg(long, short, group = "hw-wallets", hide = !cfg!(feature = "ledger"))]
+    #[arg(long, short, group = "hw-wallets")]
     ledger: bool,
 
     /// List accounts from a Trezor hardware wallet.
