@@ -4076,7 +4076,6 @@ dependencies = [
  "foundry-evm",
  "foundry-evm-networks",
  "foundry-linking",
- "foundry-solang-parser",
  "foundry-test-utils",
  "foundry-wallets",
  "futures",
@@ -4892,20 +4891,6 @@ dependencies = [
  "lalrpop-util",
  "phf",
  "thiserror 2.0.16",
- "unicode-xid",
-]
-
-[[package]]
-name = "foundry-solang-parser"
-version = "0.3.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9645e75b89f977423690f3b4bfd8d84825e5fdabd7803cbce6d4a2c4d54972b4"
-dependencies = [
- "itertools 0.14.0",
- "lalrpop",
- "lalrpop-util",
- "phf",
- "thiserror 2.0.12",
  "unicode-xid",
 ]
 
