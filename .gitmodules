@@ -1,4 +1,0 @@
-[submodule "third_party/hidapi-rusb"]
-	path = third_party/hidapi-rusb
-	url = https://github.com/Reinis-FRP/hidapi-rs.git
-	branch = openbsd
