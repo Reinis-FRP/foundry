@@ -2,13 +2,13 @@
 
 #[cfg(feature = "mimalloc")]
 use mimalloc as _;
-#[cfg(all(feature = "jemalloc", unix))]
+#[cfg(all(feature = "jemalloc", unix, not(target_os = "openbsd")))]
 use tikv_jemallocator as _;
 
 // If neither jemalloc nor mimalloc are enabled, use explicitly the system allocator.
-// By default jemalloc is enabled on Unix systems.
+// By default jemalloc is enabled on Unix systems, except OpenBSD.
 cfg_if::cfg_if! {
-    if #[cfg(all(feature = "jemalloc", unix))] {
+    if #[cfg(all(feature = "jemalloc", unix, not(target_os = "openbsd")))] {
         type AllocatorInner = tikv_jemallocator::Jemalloc;
     } else if #[cfg(feature = "mimalloc")] {
         type AllocatorInner = mimalloc::MiMalloc;
