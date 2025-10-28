@@ -21,12 +21,14 @@ revm = { workspace = true, default-features = false, features = [
     "memory_limit",
     "c-kzg",
 ] }
+op-revm.workspace = true
 
 alloy-primitives = { workspace = true, features = ["serde", "rlp"] }
 alloy-rpc-types = { workspace = true, features = ["anvil", "trace"] }
 alloy-serde.workspace = true
 alloy-rlp.workspace = true
 alloy-eips.workspace = true
+alloy-eip5792.workspace = true
 alloy-consensus = { workspace = true, features = ["k256", "kzg"] }
 alloy-dyn-abi = { workspace = true, features = ["std", "eip712"] }
 op-alloy-consensus = { workspace = true, features = ["serde"] }
