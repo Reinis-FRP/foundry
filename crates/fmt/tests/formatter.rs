@@ -223,4 +223,3 @@ fmt_tests! {
     Yul,
     YulStrings,
 }
-

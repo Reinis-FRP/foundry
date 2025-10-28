@@ -3,7 +3,7 @@
 contract Contract layout at 69 {
     bytes32 transient a;
 
-    bytes32 private constant BYTES;
+    bytes32 private constant BYTES = 0;
     bytes32
         private
         constant

@@ -15,14 +15,14 @@ CARGO_TARGET_DIR ?= target
 # List of features to use when building. Can be overridden via the environment.
 # No jemalloc on Windows and OpenBSD
 # No asm-keccak on OpenBSD
-# LIBCLANG_PATH in OpenBSD, requires having llvm 19 package installed.
+# LIBCLANG_PATH in OpenBSD, requires having llvm 21 package installed.
 # Override solc binaries for OpenBSD.
 ifeq ($(OS),Windows_NT)
     FEATURES ?= aws-kms gcp-kms cli asm-keccak
 else
     ifeq ($(shell uname -s),OpenBSD)
         FEATURES ?= aws-kms gcp-kms cli
-		    export LIBCLANG_PATH ?= /usr/local/llvm19/lib/
+		    export LIBCLANG_PATH ?= /usr/local/llvm21/lib/
 		        ifeq ($(shell uname -m),amd64)
 					      export SVM_RELEASES_LIST_JSON ?= $(abspath ./solc/openbsd/amd64/list.json)
 			      endif
