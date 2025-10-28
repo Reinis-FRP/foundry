@@ -89,6 +89,17 @@ docker-build-prepare: ## Prepare the Docker build environment.
 		docker buildx use cross-builder; \
 	fi
 
+##@ Install
+
+BINS := anvil cast chisel forge
+
+.PHONY: install
+install: ## Install all foundry binaries
+	@for bin in $(BINS); do \
+		echo "Installing $$bin..."; \
+		cargo install --path ./crates/$$bin --force --locked $(if $(CARGO_INSTALL_ROOT),--root $(CARGO_INSTALL_ROOT),); \
+	done
+
 ##@ Test
 
 ## Run unit/doc tests and generate html coverage report in `target/llvm-cov/html` folder.
