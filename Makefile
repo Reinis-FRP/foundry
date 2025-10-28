@@ -22,10 +22,10 @@ ifeq ($(OS),Windows_NT)
 else
     ifeq ($(shell uname -s),OpenBSD)
         FEATURES ?= aws-kms gcp-kms cli
-		    export LIBCLANG_PATH ?= /usr/local/llvm21/lib/
-		        ifeq ($(shell uname -m),amd64)
-					      export SVM_RELEASES_LIST_JSON ?= $(abspath ./solc/openbsd/amd64/list.json)
-			      endif
+        export LIBCLANG_PATH ?= /usr/local/llvm21/lib/
+        ifeq ($(shell uname -m),amd64)
+            export SVM_RELEASES_LIST_JSON ?= $(abspath ./solc/openbsd/amd64/list.json)
+        endif
     else
         FEATURES ?= jemalloc aws-kms gcp-kms cli asm-keccak
     endif
